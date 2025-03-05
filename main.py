@@ -1,39 +1,37 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-import os
+from fastapi import FastAPI, HTTPException
 from openai import OpenAI
 
-# Import mock responses
+# Import from separated modules
+from models import IdeaRequest
+from config import USE_MOCK, OPENAI_API_KEY, AI_SYSTEM_MESSAGES
 from mock_responses import get_mock_response
 
-# Flag to determine if we should use mock responses
-USE_MOCK = os.environ.get("USE_MOCK", "false").lower() == "true"
-
 client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY"), 
+    api_key=OPENAI_API_KEY, 
 )
 
 app = FastAPI()
-
-class IdeaRequest(BaseModel):
-    idea_text: str
-    # action: str  # "expand", "summarize", "improve"
 
 @app.get("/")
 async def root():
   return {"message": "Hello from Mindtaker!"}
 
-@app.post("/expand-idea")
-async def expand_idea(request: IdeaRequest):
+@app.post("/idea-action")
+async def process_idea(request: IdeaRequest):
     # Use mock response if configured
     if USE_MOCK:
-        return {"result": get_mock_response("expand-idea", request.idea_text)}
+        return {"result": get_mock_response(request.action, request.idea_text)}
     
-    # Otherwise use the real OpenAI client
+    # Get the appropriate system message
+    system_message = AI_SYSTEM_MESSAGES.get(request.action)
+    if not system_message:
+        raise HTTPException(status_code=400, detail="Invalid action specified")
+    
+    # Use the real OpenAI client with the appropriate system message
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[ 
-            {"role": "developer", "content": "Expand and refine user ideas with creative suggestions."},
+            {"role": "developer", "content": system_message},
             {"role": "user", "content": f"My idea is: {request.idea_text}"}
           ]
     )
