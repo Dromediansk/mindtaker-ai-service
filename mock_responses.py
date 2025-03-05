@@ -22,17 +22,6 @@ The most distinctive aspect is [unique element].
 
 This idea could be developed further by focusing on [suggestion].
 """,
-
-        "improve": """Here are suggestions to improve your idea:
-
-1. Strengthen the core value proposition by [specific suggestion]
-2. Consider addressing [potential issue or gap]
-3. Differentiate from similar solutions by [unique approach]
-4. Enhance scalability by [growth strategy]
-5. Test assumptions with [validation method]
-
-The most promising aspect to develop further is [key opportunity].
-"""
     }
 }
 
@@ -41,7 +30,7 @@ def get_mock_response(action: str, content: str = None) -> str:
     Return a mock response for the given action and content.
     
     Args:
-        action: The action to perform (expand, summarize, improve)
+        action: The action to perform (expand, summarize, etc.)
         content: The content of the request (if applicable)
         
     Returns:

@@ -7,7 +7,6 @@ from enum import Enum
 class IdeaAction(str, Enum):
     expand = "expand"
     summarize = "summarize"
-    improve = "improve"
 
 class IdeaRequest(BaseModel):
     idea_text: str
