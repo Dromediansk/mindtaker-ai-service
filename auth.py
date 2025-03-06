@@ -20,12 +20,12 @@ def verify_supabase_token(token: str):
             raise HTTPException(status_code=401, detail="User not found")
         
         return decoded_token
+    
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token expired")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
-    except Exception as e:
-        print(f"Error verifying user: {str(e)}")
+    except Exception:
         raise HTTPException(status_code=500, detail="Error verifying user")
 
 def get_current_user(auth = Security(security)):

@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends
 from openai import OpenAI
+from fastapi.middleware.cors import CORSMiddleware
 
 # Import from separated modules
 from models import IdeaRequest
@@ -12,6 +13,15 @@ openai_client = OpenAI(
 )
 
 app = FastAPI()
+
+# # Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # TODO: Change this to the actual frontend URL
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def root():
