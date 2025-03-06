@@ -2,14 +2,20 @@
 Configuration settings for the API.
 """
 import os
+from dotenv import load_dotenv
 
-# Flag to determine if we should use mock responses
-USE_MOCK = os.environ.get("USE_MOCK", "false").lower() == "true"
+# Load environment variables from .env file
+load_dotenv()
 
-# OpenAI API key
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+# Get environment variables
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET")
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
-# System messages for different idea actions
+USE_MOCK = os.getenv("USE_MOCK", "False").lower() == "true"
+
+# Other configuration variables
 AI_SYSTEM_MESSAGES = {
     "expand": "Expand and refine user ideas with creative suggestions and more details.",
     "summarize": "Provide a clear, concise summary of the user's idea, highlighting the key points.",
