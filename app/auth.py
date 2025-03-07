@@ -2,7 +2,7 @@ import jwt
 from fastapi import HTTPException, Security
 from fastapi.security import HTTPBearer
 
-from config import SUPABASE_JWT_SECRET
+from app.init import SUPABASE_JWT_SECRET
 
 security = HTTPBearer()
 

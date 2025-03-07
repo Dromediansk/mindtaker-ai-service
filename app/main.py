@@ -4,10 +4,10 @@ from openai import OpenAI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Import from separated modules
-from models import IdeaRequest
-from config import USE_MOCK, OPENAI_API_KEY, AI_SYSTEM_MESSAGES
-from mock_responses import get_mock_response
-from auth import get_current_user
+from app.init import USE_MOCK, OPENAI_API_KEY, AI_SYSTEM_MESSAGES
+from app.idea_models import IdeaRequest
+from app.ai_response_mocks import get_mock_response
+from app.auth import get_current_user
 
 openai_client = OpenAI(
     api_key=OPENAI_API_KEY, 
@@ -52,4 +52,4 @@ async def process_idea(request: IdeaRequest, user=Depends(get_current_user)):
     return {"error": "No response from the model"}
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000)
