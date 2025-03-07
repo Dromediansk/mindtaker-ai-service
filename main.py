@@ -52,4 +52,4 @@ async def process_idea(request: IdeaRequest, user=Depends(get_current_user)):
     return {"error": "No response from the model"}
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8080)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
