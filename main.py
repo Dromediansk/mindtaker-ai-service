@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI, HTTPException, Depends
 from openai import OpenAI
 from fastapi.middleware.cors import CORSMiddleware
@@ -49,3 +50,6 @@ async def process_idea(request: IdeaRequest, user=Depends(get_current_user)):
     if response.choices and len(response.choices) > 0:
         return {"result": response.choices[0].message.content}
     return {"error": "No response from the model"}
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8080)
