@@ -1,14 +1,10 @@
 from fastapi import APIRouter, HTTPException, Depends
-from openai import OpenAI
 
-from app.init import USE_MOCK, OPENAI_API_KEY, AI_SYSTEM_MESSAGES
-from app.idea_models import IdeaRequest
+from app.init import USE_MOCK
+from app.utils import AI_SYSTEM_MESSAGES, IdeaRequest
 from app.ai_response_mocks import get_mock_response
 from app.auth import get_current_user
-
-openai_client = OpenAI(
-    api_key=OPENAI_API_KEY, 
-)
+from app.openai import openai_client
 
 ideas_router = APIRouter(prefix="/ideas")
 
