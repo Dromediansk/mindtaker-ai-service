@@ -1,6 +1,3 @@
-"""
-Data models used in the API.
-"""
 from pydantic import BaseModel
 from enum import Enum
 

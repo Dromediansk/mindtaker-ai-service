@@ -1,8 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 
 from app.init import USE_MOCK
-from app.utils import AI_SYSTEM_MESSAGES, IdeaRequest
-from app.ai_response_mocks import get_mock_response
+from app.utils import AI_SYSTEM_MESSAGES, IdeaRequest, get_mock_response
 from app.auth import get_current_user
 from app.openai import openai_client
 
@@ -12,7 +11,7 @@ ideas_router = APIRouter(prefix="/ideas")
 async def process_idea(request: IdeaRequest, user=Depends(get_current_user)):
     # Use mock response if configured
     if USE_MOCK:
-        return {"result": get_mock_response(request.action, request.idea_text)}
+        return {"result": get_mock_response(request.action)}
     
     # Get the appropriate system message
     system_message = AI_SYSTEM_MESSAGES.get(request.action)
