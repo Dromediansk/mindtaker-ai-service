@@ -12,7 +12,7 @@ Mindtaker is an AI-powered service that processes and enhances user ideas throug
 
 ### Protected Endpoints
 
-- `POST /idea-action`: Processes user ideas with AI assistance
+- `POST /posts/action`: Processes user ideas with AI assistance
   - Required body parameters:
     - `action`: The type of processing to apply to the idea
     - `idea_text`: The content of the idea to be processed
