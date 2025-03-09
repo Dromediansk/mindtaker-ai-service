@@ -1,11 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends
+import os
 
-from app.init import USE_MOCK
 from app.utils import AI_SYSTEM_MESSAGES, IdeaRequest, get_mock_response
 from app.auth import get_current_user
 from app.openai import openai_client
 
 ideas_router = APIRouter(prefix="/ideas")
+
+USE_MOCK = os.getenv("USE_MOCK", "False").lower() == "true"
 
 @ideas_router.post("/action")
 async def process_idea(request: IdeaRequest, user=Depends(get_current_user)):
